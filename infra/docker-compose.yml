@@ -17,6 +17,18 @@ services:
       - kafka_data:/var/lib/kafka/data
     networks:
       - microservices
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "kafka-topics.sh",
+          "--bootstrap-server",
+          "kafka:9092",
+          "--list",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   redis:
     image: redis:7-alpine
